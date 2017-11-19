@@ -1,13 +1,14 @@
 {
-    "$schema": "http://json-schema.org/draft-06/schema#",
-    "$id": "http://example.com/schemas/cloud-formation-schema.json",
+    "$schema": "http://json-schema.org/draft-04/schema#",
     "title": "Template",
     "description": "Cloudformation template",
     "type": "object",
     "properties": {
         "AWSTemplateFormatVersion": {
             "type": "string",
-            "const": "2010-09-09"
+            "enum": [
+                "2010-09-09"
+            ]
         },
         "Description": {
             "description": "Template description",
