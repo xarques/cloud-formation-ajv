@@ -1,0 +1,48 @@
+{
+   "$schema": "http://json-schema.org/draft-06/schema#",
+   "$id": "http://example.com/example.json",
+   "type": "object",
+   "properties": {
+    "AWSTemplateFormatVersion": {
+        "type": "string",
+        "const": "2010-09-09"
+    },
+    "Description": {
+        "description": "Template description",
+        "type": "string",
+        "maxLength": 1024
+    },
+    "Resources": {
+      "$id": "/properties/Resources",
+      "additionalProperties": false,
+      "description": "Template resources",
+       "type": "object",
+        "patternProperties": {
+            "^[a-zA-Z0-9]+$": {
+             "$id": "/properties/Resources/properties/Bucket",
+             "type": "object",
+             "properties": {
+               "Type": {
+                 "$id": "/properties/Resources/properties/MyXavierArquesBucket/properties/Type",
+                 "type": "string",
+                 "title": "The Type Schema.",
+                 "description": "An explanation about the purpose of this instance.",
+                 "default": "",
+                 "enum": [
+                   "AWS::S3::Bucket"
+                 ]
+               }
+             },
+              "required": [
+                  "Type"
+              ],
+              "additionalProperties": false
+            }
+        }
+     }
+   },
+    "required": [
+        "Resources"
+    ],
+    "additionalProperties": false
+}
