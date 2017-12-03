@@ -1,0 +1,64 @@
+<html>
+  <head></head>
+  <body>
+    <script src="ajv.min.js"></script>
+
+    <script>
+      var schema = {
+        "properties": {
+          "foo": { "type": "string" },
+          "bar": { "type": "number", "maximum": 3 }
+        }
+      };
+
+      var schema2 = {
+        "properties": {
+          "Resources": {
+            "$id": "/properties/Resources",
+            "additionalProperties": false,
+            "description": "Template resources",
+            "type": "object",
+            "patternProperties": {
+              "^[a-zA-Z0-9]+$": {
+                "$id": "/properties/Resources/properties/Bucket",
+                "type": "object",
+                "properties": {
+                  "Type": {
+                    "$id": "/properties/Resources/properties/MyXavierArquesBucket/properties/Type",
+                    "type": "string",
+                    "title": "The Type Schema.",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "enum": [
+                      "AWS::S3::Bucket"
+                    ]
+                  }
+                },
+                "required": [
+                  "Type"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "required": [
+          "Resources"
+        ],
+        "additionalProperties": false
+      };
+      var ajv = new Ajv(); // options can be passed, e.g. {allErrors: true}
+      var validate = ajv.compile(schema2);
+
+      //test({"foo": "abc", "bar": 2});
+      //test({"foo": 2, "bar": 4});
+      test({"Resources" : {"MyXavierArquesBucket":{ "Type" : "AWS::S3::Bucket"}}});
+
+      function test(data) {
+        var valid = validate(data);
+        if (valid) console.log('Valid!');
+        else console.log('Invalid: ' + ajv.errorsText(validate.errors));
+      }
+    </script>
+  </body>
+</html>
